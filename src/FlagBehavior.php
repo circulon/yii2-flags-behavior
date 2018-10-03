@@ -183,13 +183,13 @@ class FlagBehavior extends Behavior
         }
 
         if (!empty($trueFlags)) {
-          $tvalue = $this->mergeFlags($trueFlags);
-          $query->andWhere($table."[[{$this->flagsAttribute}]] & :tvalue{$class}", [":tvalue{$class}" => $tvalue]);
+            $tvalue = $this->mergeFlags($trueFlags);
+            $query->andWhere($table."[[{$this->flagsAttribute}]] & :tvalue{$class} != 0", [":tvalue{$class}" => $tvalue]);
         }
 
         if (!empty($falseFlags)) {
-          $fvalue = $this->mergeFlags($falseFlags);
-          $query->andWhere('!('.$table."[[{$this->flagsAttribute}]] & :fvalue{$class})", [":fvalue{$class}" => $fvalue]);
+            $fvalue = $this->mergeFlags($falseFlags);
+            $query->andWhere($table."[[{$this->flagsAttribute}]] & :fvalue{$class} = 0", [":fvalue{$class}" => $fvalue]);
         }
 
         return $query;
